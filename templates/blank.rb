@@ -21,6 +21,12 @@ environment 'config.action_view.cache_template_loading = false', :env => "produc
 environment 'config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache/"', :env => "production"
 initializer 'browsercms.rb', <<-CODE
 Cms.attachment_file_permission = 0640
+
+Cms.file_storage_on_s3 = false
+Cms.s3_options = {
+    :s3_bucket => "your_bucket_name",
+    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml"
+}
 CODE
 if Gem.win_platform?
   puts "        rake  db:migrate"

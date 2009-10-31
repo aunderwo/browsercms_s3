@@ -7,7 +7,10 @@ module Cms
     ::SPEC = eval(File.read(__root__ + '/browsercms.gemspec'))
 
     attr_accessor :attachment_file_permission
-
+    
+    attr_accessor :file_storage_on_s3
+    attr_accessor :s3_options
+    
     def version
       @version = SPEC.version.version
     end
@@ -31,6 +34,9 @@ module Cms
       # so they could be blown away on a server restart or something
       # so this just makes sure they get written out
       DynamicView.write_all_to_disk! if DynamicView.table_exists?
+ 
+      # ensure that we have a default of not uploading all our files to S3.
+      Cms.file_storage_on_s3 if Cms.file_storage_on_s3.nil?
     end
     
     # This is used by CMS modules to register with the CMS generator

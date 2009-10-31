@@ -64,7 +64,7 @@ class Cms::ContentController < Cms::ApplicationController
   
   def render_page_with_caching
     render_page
-    cache_page if perform_caching
+    response.headers['Cache-Control'] = 'public, max-age=300' if perform_caching
   end
   
   # This is the method all error handlers delegate to
@@ -181,17 +181,23 @@ class Cms::ContentController < Cms::ApplicationController
       if @attachment
         raise Cms::Errors::AccessDenied unless current_user.able_to_view?(@attachment)
 
-        #Construct a path to where this file would be if it were cached
-        @file = @attachment.full_file_location
-
-        #Stream the file if it exists
-        if @path != "/" && File.exists?(@file)
-          send_file(@file, 
-            :filename => @attachment.file_name,
-            :type => @attachment.file_type,
-            :disposition => "inline"
-          ) 
-        end    
+        if Cms.file_storage_on_s3
+          #get the file off S3
+          redirect_to("http://#{Cms.s3_options[:s3_bucket]}.s3.amazonaws.com/#{@attachment.file_location}")
+          
+        else
+          #Construct a path to where this file would be if it were cached
+          @file = @attachment.full_file_location
+          
+          #Stream the file if it exists
+          if @path != "/" && File.exists?(@file)
+            send_file(@file, 
+              :filename => @attachment.file_name,
+              :type => @attachment.file_type,
+              :disposition => "inline"
+            )
+          end
+        end
       end
     end
     

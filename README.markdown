@@ -33,6 +33,14 @@ The next releases will be aimed at tightning up the admin for both Safari and IE
 ## Getting Started
 Before you can use BrowserCMS, you will need to install the gem. See the Getting Started guide at http://browsercms.org/doc/guides/html/getting_started.html, or packaged with this source code (under doc/guides/html/getting_started.html)
 
+## Using S3 for file storage
+To enable S3 file storage set Cms.file_storage_on_s3 in config/initializers/browsercms.rb to true.  Ensure that you enter your bucket name in the relavant variable, as well as also provide a s3.yml file that contains your credentials.
+The credentials file must match that of Paperclip: http://dev.thoughtbot.com/paperclip/classes/Paperclip/Storage/S3.html
+
+Note that changing from local storage to S3 storage will require you to re-upload all your files (or copy the tree to s3)
+This feature requires the RightAWS gem from RightScale (sudo gem install right_aws)
+
+
 ## License
 BrowserCMS is released under a LGPL license, and is copyright 1998-2009 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.
 
