@@ -12,12 +12,11 @@ require 'tasks/rails'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "browsercms"
-    gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails.}
-    gem.email = "github@browsermedia.com"
-    gem.homepage = "http://www.browsercms.org"
-    gem.authors = ["BrowserMedia"]
-    gem.rubyforge_project = 'browsercms' # This line would be new
+    gem.name = "browsercms_s3"
+    gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails. This is a fork where the facility to have attachments stored on Amazon S3 has been added. Also caching has been changed to suit heroku}
+    gem.email = "email2ants@gmail.com"
+    gem.homepage = "http://github.com/aunderwo/browsercms_s3"
+    gem.authors = ["Anthony Underwood"]
 
     gem.files = Dir["rails/*.rb"]
     gem.files += Dir["browsercms.gemspec"]
@@ -39,6 +38,7 @@ begin
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
