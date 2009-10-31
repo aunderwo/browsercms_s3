@@ -72,7 +72,7 @@ class Cms::ApplicationController < ApplicationController
     end
   
     def url_without_cms_domain_prefix
-      request.url.sub(/#{cms_domain_prefix}\./,'')
+      request.url.sub(/#{cms_domain_prefix}\./,'www.')
     end
   
 end
